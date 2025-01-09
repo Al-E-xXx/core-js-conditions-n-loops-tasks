@@ -330,6 +330,7 @@ function getBalanceIndex(arr) {
     }
     leftSumm += arr[i];
   }
+
   return -1;
 }
 
@@ -464,10 +465,6 @@ function sortByAsc(arr) {
   return a;
 }
 
-// const ar = [-2, 9, 5, -3];
-
-// console.log(sortByAsc(ar));
-
 /**
  * Shuffles characters in a string so that the characters with an odd index are moved to the end of the string at each iteration.
  * Take into account that the string can be very long and the number of iterations is large. Consider how you can optimize your solution.
@@ -485,8 +482,38 @@ function sortByAsc(arr) {
  *  '012345', 3 => '024135' => '043215' => '031425'
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
-function shuffleChar(/* str, iterations */) {
-  throw new Error('Not implemented');
+function shuffleChar(str, iterations) {
+  function shuffleOnce(strng) {
+    let evenChars = '';
+    let oddChars = '';
+
+    for (let i = 0; i < strng.length; i += 1) {
+      if (i % 2 === 0) {
+        evenChars += strng[i];
+      } else {
+        oddChars += strng[i];
+      }
+    }
+
+    return evenChars + oddChars;
+  }
+
+  let result = str;
+  let period = 0;
+
+  do {
+    result = shuffleOnce(result);
+    period += 1;
+  } while (result !== str);
+
+  const optimizedIterations = iterations % period;
+
+  result = str;
+  for (let i = 0; i < optimizedIterations; i += 1) {
+    result = shuffleOnce(result);
+  }
+
+  return result;
 }
 
 /**
